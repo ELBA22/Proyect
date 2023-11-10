@@ -1,22 +1,21 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection.Metadata.Ecma335;
 using System.Threading.Tasks;
 using API.DTOS;
 using AutoMapper;
 using Domain.Entities;
 using Domain.Interfaces;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-    public class CityController :BaseControllerAPI
+    public class CountryController :BaseControllerAPI
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        public CityController (IUnitOfWork unitOfWork, IMapper mapper)
+
+        public CountryController(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
@@ -25,84 +24,81 @@ namespace API.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<IEnumerable<CityDto>>> Get()
+        public async Task<ActionResult<IEnumerable<CountryDto>>> Get()
         {
-            var city = await _unitOfWork.Citys.GetAllAsync();
-            return _mapper.Map<List<CityDto>>(city);
+            var country = await _unitOfWork.Countrys.GetAllAsync();
+            return _mapper.Map<List<CountryDto>>(country);
         }
 
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<CityDto>>Get(int id)
+        public async Task<ActionResult<Country>>Get (int id)
         {
-            var city= await _unitOfWork.Citys.GetByIdAsync(id);
-            if(city == null)
+            var country = await _unitOfWork.Countrys.GetByIdAsync(id);
+            if(country == null)
             {
                 return NotFound();
             }
-            return _mapper.Map<CityDto>(city);
+            return country;
         }
-        
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<CityDto>>Post(CityDto cityDto)
+        public async Task<ActionResult<Country>> Post(CountryDto countryDto)
         {
-            var city = _mapper.Map<City>(cityDto);
-            this._unitOfWork.Citys.Add(city);
+            var country = _mapper.Map<Country>(countryDto);
+
+            this._unitOfWork.Countrys.Add(country);
             await _unitOfWork.SaveAsync();
-            
-            if(city == null)
+
+            if (country == null)
             {
                 return BadRequest();
             }
-            cityDto.Id = city.Id;
-            return CreatedAtAction(nameof(Post), new {id = cityDto.Id}, city);
+            countryDto.Id = country.Id;
+            return CreatedAtAction(nameof(Post), new {id = countryDto.Id}, countryDto);
         }
-
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<CityDto>> Put (int id, [FromBody] CityDto cityDto)
+        public async Task<ActionResult<CountryDto>> Put(int id, [FromBody] CountryDto countryDto)
         {
-            var city = _mapper.Map<City>(cityDto);
-            if (city.Id == 0)
+            var country = _mapper.Map<Country>(countryDto);
+            if(country.Id == 0)
             {
-                city.Id = id;
+                country.Id = id;
             }
-            if (city.Id != id)
+            if (country.Id != id)
             {
                 return BadRequest();
             }
-            if (city == null)
+            if (country == null)
             {
                 return NotFound();
             }
-            cityDto.Id = city.Id;
-            _unitOfWork.Citys.Update(city);
+            countryDto.Id = country.Id;
+            _unitOfWork.Countrys.Update(country);
             await _unitOfWork.SaveAsync();
-            return cityDto;
+            return countryDto;
         }
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult> Delete(int id)
         {
-            var city = await _unitOfWork.Citys.GetByIdAsync(id);
-            if (city == null)
+            var country = await _unitOfWork.Countrys.GetByIdAsync(id);
+            if(country == null)
             {
                 return NotFound();
             }
-            _unitOfWork.Citys.Remove(city);
+            _unitOfWork.Countrys.Remove(country);
             await _unitOfWork.SaveAsync();
             return NoContent();
-        }
-
-
         
-
+        }
     }
 }

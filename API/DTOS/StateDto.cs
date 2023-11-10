@@ -8,7 +8,6 @@ namespace API.DTOS
     public class StateDto
     {
         public string Name { get; set; }
-
-        public int IdcountryFk { get; set; }
+        public int Id {get; set;}
     }
 }

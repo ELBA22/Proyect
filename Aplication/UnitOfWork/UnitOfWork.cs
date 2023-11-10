@@ -21,9 +21,6 @@ namespace Aplication.UnitOfWork
         private CountryRepository _countrys;
         private PersonTypeRepository _personTypes;
         private StateRepository _states;
-
-
-
         public ICity Citys
         {
             get
@@ -79,11 +76,6 @@ namespace Aplication.UnitOfWork
         public async Task<int> SaveAsync()
         {
             return await _context.SaveChangesAsync();
-        }
-
-        Task IUnitOfWork.SaveAsync()
-        {
-            throw new NotImplementedException();
         }
     }
 }

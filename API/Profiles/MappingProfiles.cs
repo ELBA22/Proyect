@@ -14,7 +14,6 @@ namespace API.Profiles
         {
             CreateMap<City, CityDto>().ReverseMap();
             CreateMap<Country, CountryDto>().ReverseMap();
-            CreateMap<Persontype, PersonTypeDto>().ReverseMap();
             CreateMap<State, StateDto>().ReverseMap();
         }
     }

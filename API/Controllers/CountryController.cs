@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-    public class CountryController :BaseControllerAPI
+    public class CountryController :BaseController
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;

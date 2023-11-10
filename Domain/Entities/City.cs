@@ -10,4 +10,5 @@ public partial class City :BaseEntity
     public int IdStateFk { get; set; }
 
     public virtual State IdStateFkNavigation { get; set; }
+    public ICollection<Customer> Customers {get; set;}
 }

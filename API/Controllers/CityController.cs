@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-    public class CityController :BaseControllerAPI
+    public class CityController :BaseController
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
@@ -100,9 +100,5 @@ namespace API.Controllers
             await _unitOfWork.SaveAsync();
             return NoContent();
         }
-
-
-        
-
     }
 }

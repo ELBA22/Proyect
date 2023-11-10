@@ -8,8 +8,8 @@ namespace API.Controllers
 {
 
         [ApiController]
-        [Route("api/controllers")]
-        public class BaseControllerAPI :ControllerBase
+        [Route("api/[controller]")]
+        public class BaseController :ControllerBase
         {
 
         }

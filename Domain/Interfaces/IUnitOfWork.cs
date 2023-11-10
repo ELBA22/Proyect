@@ -11,6 +11,6 @@ namespace Domain.Interfaces
         ICountry Countrys {get;}
         IPersonType PersonTypes {get;}
         IState States {get;}
-        Task SaveAsync();
+        Task<int> SaveAsync();
     }
 }

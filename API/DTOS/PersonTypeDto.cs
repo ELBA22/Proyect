@@ -5,10 +5,9 @@ using System.Threading.Tasks;
 
 namespace API.DTOS
 {
-    public class CityDto
+    public class PersonTypeDto
     {
         public int Id { get; set; }
         public string Name { get; set; } = null!;
-        public int IdStateFk { get; set; }
     }
 }
